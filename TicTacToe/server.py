@@ -1,6 +1,6 @@
 import socket
 
-HOST = '192.168.100.100'
+HOST = '127.0.0.1'
 PORT = 3050
 
 SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -20,6 +20,6 @@ def server(Socket, Host, Port):
                 else:
                     print(data)
                 conn.sendall(data)
-                
+
 
 server(SOCKET, HOST, PORT)
