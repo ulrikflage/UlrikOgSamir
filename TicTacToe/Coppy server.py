@@ -146,7 +146,7 @@ while True:
     print('Waiting for player 2...\n')
 
     a = "Connected to %s\n\nEnter your player name: " % host
-    sock.send(bytes(str(a)))
+    sock.send(bytes(a))
     player2 = sock.recv(4096)
     print('Enter your player name: ')
 
