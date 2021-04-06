@@ -21,5 +21,41 @@ def server(Socket, Host, Port):
                     print(data)
                 conn.sendall(data)
 
+def board():
+    """
+       |   |
+       |   |
+    ___|___|___
+       |   |
+       |   |
+    ___|___|___
+       |   |
+       |   |
+       |   |
+    """
+    string = ""
+    for i in range(9):
 
-server(SOCKET, HOST, PORT)
+        for j in range(9):
+            if j == 4 or j == 7:
+                string += "|"
+            elif i == 2 or i == 5:
+                if j < 3:
+                    string += "_"
+                elif 4 < j:
+                    string += "__"
+                elif j < 7:
+                    string += "_"
+                elif j > 7:
+                    string += "_"
+            elif j < 4:
+                string += " "
+            elif j > 4:
+                string += "  "
+            elif j > 7:
+                string += "   "
+        string += "\n"
+    print(string)
+
+board()
+#server(SOCKET, HOST, PORT)
