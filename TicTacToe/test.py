@@ -2,7 +2,7 @@ import socket  # for sockets
 import sys  # for exit
 import time  # for sleep
 
-remote_ip = "192.168.0.17"  # should match the instrument’s IP address
+remote_ip = "192.168.100.100"  # should match the instrument’s IP address
 port = 5024  # the port number of the instrument service
 count = 0
 
@@ -13,7 +13,7 @@ def SocketConnect():
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     except socket.error:
         print('Failed to create socket.')
-        sys.exit();
+        sys.exit()
     try:
         # Connect to remote server
         s.connect((remote_ip, port))
@@ -59,4 +59,4 @@ def main():
 
 
 if __name__ == '__main__':
-    proc = main()
+    main()
