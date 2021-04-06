@@ -20,6 +20,6 @@ def server(Socket, Host, Port):
                 else:
                     print(data)
                 conn.sendall(data)
-
+                
 
 server(SOCKET, HOST, PORT)
