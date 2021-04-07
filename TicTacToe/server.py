@@ -37,17 +37,17 @@ def board(values):
     underscore = underscore_list[0] + underscore_list[1] + underscore_list[2]
 
     print("\n")
-    print("\t   |   |   |")
-    print("\t {} | {} | {}").format(values[0], values[1], values[2])
-    print("\t" + underscore + "|" + underscore + "|")
+    print("\t   |   |")
+    print("\t {} | {} | {}".format(values[0], values[1], values[2]))
+    print("\t" + underscore + "|" + underscore + "|" + underscore)
 
-    print("\t   |   |   |")
-    print("\t {} | {} | {}").format(values[3], values[4], values[5])
-    print("\t" + underscore + "|" + underscore + "|")
+    print("\t   |   |")
+    print("\t {} | {} | {}".format(values[3], values[4], values[5]))
+    print("\t" + underscore + "|" + underscore + "|" + underscore)
 
-    print("\t   |   |   |")
-    print("\t {} | {} | {}").format(values[6], values[7], values[8])
-    print("\t" + underscore + "|" + underscore + "|")
+    print("\t   |   |")
+    print("\t {} | {} | {}".format(values[6], values[7], values[8]))
+    print("\t   |   |")
     print("\n")
 
 
@@ -58,6 +58,7 @@ def checkPos(pos1, pos2):
     :param pos2:
     :return:
     """
+    global player
     index = int()
     if int(pos2) in range(1, 4) and pos1.lower() in ["a", "b", "c"]: # check if pos1 is a number
         if pos1.lower() == "a":
@@ -96,10 +97,24 @@ def checkPos(pos1, pos2):
             elif index2 == 3:
                 index = 8
 
-    # in_values[int(index)]
-    pass
+    if player == 1:
+        in_values[int(index)] = "X"
+        player = 2
+    else:
+        in_values[int(index)] = "O"
+        player = 1
 
 
-server(SOCKET, HOST, PORT)
-board(values=in_values)
+#server(SOCKET, HOST, PORT)
+def main():
+    global player
+    player = 1
+    while True:
+        board(in_values)
+        data = input()
+        POS1 = data[0]
+        POS2 = data[1]
+        checkPos(POS1, POS2)
+#values=in_values
 
+main()
