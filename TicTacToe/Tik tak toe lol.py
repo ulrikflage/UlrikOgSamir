@@ -19,12 +19,21 @@ s.bind((HOST, PORT))
 s.listen(1)
 
 
+def motta_data():
+    pass
+
+
 def venter_tilkobling():
     global koblet_til, conn, addr
     conn, addr = s.accept()
     print("Etablert sammenkobling fra", addr)
     koblet_til = True
-    s.send("velkommen til Tic Tac Toe")
+    s.send(b"Velkommen til Tic Tac Toe")
+    motta_data()
+
+
+create_thread(venter_tilkobling)
+
 
 main = Tk()
 
