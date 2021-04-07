@@ -23,6 +23,7 @@ def venter_tilkobling():
     global koblet_til, conn, addr
     conn, addr = s.accept()
     print("Etablert sammenkobling fra", addr)
+    koblet_til = True
     s.send("velkommen til Tic Tac Toe")
 
 main = Tk()
