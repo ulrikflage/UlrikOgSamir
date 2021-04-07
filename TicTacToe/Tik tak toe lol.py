@@ -1,115 +1,77 @@
-def display_board(board):
-    blankBoard="""
-___________________
-|     |     |     |
-|  7  |  8  |  9  |
-|     |     |     |
-|-----------------|
-|     |     |     |
-|  4  |  5  |  6  |
-|     |     |     |
-|-----------------|
-|     |     |     |
-|  1  |  2  |  3  |
-|     |     |     |
-|-----------------|
-"""
+from tkinter import *
 
-    for i in range(1,10):
-        if (board[i] == 'O' or board[i] == 'X'):
-            blankBoard = blankBoard.replace(str(i), board[i])
-        else:
-            blankBoard = blankBoard.replace(str(i), ' ')
-    print(blankBoard)
+main = Tk()
 
-def player_input():
-    player1 = input("Please pick a marker 'X' or 'O' ")
-    while True:
-        if player1.upper() == 'X':
-            player2='O'
-            print("You've choosen " + player1 + ". Player 2 will be " + player2)
-            return player1.upper(),player2
-        elif player1.upper() == 'O':
-            player2='X'
-            print("You've choosen " + player1 + ". Player 2 will be " + player2)
-            return player1.upper(),player2
-        else:
-            player1 = input("Please pick a marker 'X' or 'O' ")
+c = Canvas(main, width=600, height=600)
+c.pack()
 
-def place_marker(board, marker, position):
-    board[position] = marker
-    return board
+c.create_line(200, 0, 200, 600)
+c.create_line(400, 0, 400, 600)
 
-def space_check(board, position):
-    return board[position] == '#'
+c.create_line(0, 200, 600, 200)
+c.create_line(0, 400, 600, 400)
 
-def full_board_check(board):
-    return len([x for x in board if x == '#']) == 1
+grid = [
+    "0", "1", "2",
+    "3", "4", "5",
+    "6", "7", "8",
+]
 
-def win_check(board, mark):
-    if board[1] == board[2] == board[3] == mark:
-        return True
-    if board[4] == board[5] == board[6] == mark:
-        return True
-    if board[7] == board[8] == board[9] == mark:
-        return True
-    if board[1] == board[4] == board[7] == mark:
-        return True
-    if board[2] == board[5] == board[8] == mark:
-        return True
-    if board[3] == board[6] == board[9] == mark:
-        return True
-    if board[1] == board[5] == board[9] == mark:
-        return True
-    if board[3] == board[5] == board[7] == mark:
-        return True
-    return False
+def click(event):
+    shape = choose_shape()
+    across = int(c.canvasx(event.x) / 200)
+    down = int(c.canvasy(event.y) / 200)
+    square = across + (down * 3)
 
-def player_choice(board):
-    choice = input("Please select an empty space between 1 and 9 : ")
-    while not space_check(board, int(choice)):
-        choice = input("This space isn't free. Please choose between 1 and 9 : ")
-    return choice
+    if grid[square] == "X" or grid[square] == "O":
+        return
 
-def replay():
-    playAgain = input("Do you want to play again (y/n) ? ")
-    if playAgain.lower() == 'y':
-        return True
-    if playAgain.lower() == 'n':
-        return False
+    if winner():
+        return
 
-if __name__ == "__main__":
-    print('Welcome to Tic Tac Toe!')
-    i = 1
-    # Choose your side
-    players=player_input()
-    # Empty board init
-    board = ['#'] * 10
-    while True:
-        # Set the game up here
-        game_on=full_board_check(board)
-        while not game_on:
-            # Player to choose where to put the mark
-            position = player_choice(board)
-            # Who's playin ?
-            if i % 2 == 0:
-                marker = players[1]
-            else:
-                marker = players[0]
-            # Play !
-            place_marker(board, marker, int(position))
-            # Check the board
-            display_board(board)
-            i += 1
-            if win_check(board, marker):
-                print("You won !")
-                break
-            game_on=full_board_check(board)
-        if not replay():
-            break
-        else:
-            i = 1
-            # Choose your side
-            players=player_input()
-            # Empty board init
-            board = ['#'] * 10
+    if shape == "O":
+        c.create_oval(
+            across * 200, down * 200,
+            (across+1) * 200, (down+1) * 200
+        )
+        grid[square] = "O"
+    else:
+        c.create_line(
+            across * 200, down * 200,
+            (across+1) * 200, (down+1) * 200
+        )
+        c.create_line(
+            across * 200, (down+1) * 200,
+            (across+1) * 200, down * 200
+        )
+        grid[square] = "X"
+
+def choose_shape():
+    if grid.count("O") > grid.count("X"):
+        return "X"
+    else:
+        return "O"
+
+def winner():
+    for across in range(3):
+        row = across * 3
+        line = grid[row] + grid[row+1] + grid[row+2]
+        if line == "XXX" or line == "OOO":
+            return True
+
+    for down in range(3):
+        line = grid[down] + grid[down+3] + grid[down+6]
+        if line == "XXX" or line == "OOO":
+            return True
+
+    line = grid[0] + grid[4] + grid[8]
+    if line == "XXX" or line == "OOO":
+            return True
+
+    line = grid[2] + grid[4] + grid[6]
+    if line == "XXX" or line == "OOO":
+            return True
+
+c.bind("<Button-1>", click)
+
+mainloop()
