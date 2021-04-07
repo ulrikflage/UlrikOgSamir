@@ -1,13 +1,13 @@
 from tkinter import *
-
+import socket
 import threading
+
 
 def create_thread(target):
     thread = threading.Thread(target=target)
     thread.daemon = True
     thread.start()
 
-import socket
 
 HOST = "127.0.0.1"
 PORT = 65505
