@@ -1,16 +1,31 @@
 from tkinter import *
 import socket
+import threading
+
+
+def create_thread(target):
+    thread = threading.Thread(target=target)
+    thread.daemon = True
+    thread.start()
 
 
 HOST = "127.0.0.1"
-PORT = 65505
+PORT = 3050
 
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
 
 
+def motta_data():
+    pass
+
+
+create_thread(motta_data)
+
+
 main = Tk()
+
 
 c = Canvas(main, width=600, height=600)
 c.pack()
@@ -26,6 +41,7 @@ grid = [
     "3", "4", "5",
     "6", "7", "8",
 ]
+
 
 def click(event):
     shape = choose_shape()
@@ -56,11 +72,13 @@ def click(event):
         )
         grid[square] = "X"
 
+
 def choose_shape():
     if grid.count("O") > grid.count("X"):
         return "X"
     else:
         return "O"
+
 
 def winner():
     for across in range(3):
@@ -82,6 +100,6 @@ def winner():
     if line == "XXX" or line == "OOO":
             return True
 
-c.bind("<Button-1>", click)
 
+c.bind("<Button-1>", click)
 mainloop()

@@ -10,7 +10,7 @@ def create_thread(target):
 
 
 HOST = "127.0.0.1"
-PORT = 65505
+PORT = 3050
 koblet_til = False
 conn, addr = None, None
 
@@ -28,7 +28,7 @@ def venter_tilkobling():
     conn, addr = s.accept()
     print("Etablert sammenkobling fra client")
     koblet_til = True
-    s.send(b"Velkommen til Tic Tac Toe")
+   # s.send(b"Velkommen til Tic Tac Toe")
     motta_data()
 
 
@@ -36,6 +36,7 @@ create_thread(venter_tilkobling)
 
 
 main = Tk()
+
 
 c = Canvas(main, width=600, height=600)
 c.pack()
@@ -51,6 +52,7 @@ grid = [
     "3", "4", "5",
     "6", "7", "8",
 ]
+
 
 def click(event):
     shape = choose_shape()
@@ -81,11 +83,13 @@ def click(event):
         )
         grid[square] = "X"
 
+
 def choose_shape():
     if grid.count("O") > grid.count("X"):
         return "X"
     else:
         return "O"
+
 
 def winner():
     for across in range(3):
@@ -107,6 +111,6 @@ def winner():
     if line == "XXX" or line == "OOO":
             return True
 
-c.bind("<Button-1>", click)
 
+c.bind("<Button-1>", click)
 mainloop()
