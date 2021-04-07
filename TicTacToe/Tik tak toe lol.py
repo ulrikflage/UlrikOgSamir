@@ -1,5 +1,30 @@
 from tkinter import *
 
+import threading
+
+def create_thread(target):
+    thread = threading.Thread(target=target)
+    thread.daemon = True
+    thread.start()
+
+import socket
+
+HOST = "127.0.0.1"
+PORT = 65505
+koblet_til = False
+conn, addr = None, None
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((HOST, PORT))
+s.listen(1)
+
+
+def venter_tilkobling():
+    global koblet_til, conn, addr
+    conn, addr = s.accept()
+    print("Etablert sammenkobling fra", addr)
+    s.send("velkommen til Tic Tac Toe")
+
 main = Tk()
 
 c = Canvas(main, width=600, height=600)
