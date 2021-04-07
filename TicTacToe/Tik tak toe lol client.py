@@ -1,38 +1,13 @@
 from tkinter import *
 import socket
-import threading
-
-
-def create_thread(target):
-    thread = threading.Thread(target=target)
-    thread.daemon = True
-    thread.start()
 
 
 HOST = "127.0.0.1"
 PORT = 65505
-koblet_til = False
-conn, addr = None, None
+
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind((HOST, PORT))
-s.listen(1)
-
-
-def motta_data():
-    pass
-
-
-def venter_tilkobling():
-    global koblet_til, conn, addr
-    conn, addr = s.accept()
-    print("Etablert sammenkobling fra client")
-    koblet_til = True
-    s.send(b"Velkommen til Tic Tac Toe")
-    motta_data()
-
-
-create_thread(venter_tilkobling)
+s.connect((HOST, PORT))
 
 
 main = Tk()
