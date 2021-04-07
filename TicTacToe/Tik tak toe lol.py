@@ -24,7 +24,8 @@ def venter_tilkobling():
     conn, addr = s.accept()
     print("Etablert sammenkobling fra", addr)
     koblet_til = True
-    s.send("velkommen til Tic Tac Toe")
+    s.send(b"velkommen til Tic Tac Toe")
+
 
 main = Tk()
 
@@ -42,6 +43,7 @@ grid = [
     "3", "4", "5",
     "6", "7", "8",
 ]
+
 
 def click(event):
     shape = choose_shape()
@@ -72,11 +74,13 @@ def click(event):
         )
         grid[square] = "X"
 
+
 def choose_shape():
     if grid.count("O") > grid.count("X"):
         return "X"
     else:
         return "O"
+
 
 def winner():
     for across in range(3):
@@ -92,11 +96,12 @@ def winner():
 
     line = grid[0] + grid[4] + grid[8]
     if line == "XXX" or line == "OOO":
-            return True
+        return True
 
     line = grid[2] + grid[4] + grid[6]
     if line == "XXX" or line == "OOO":
-            return True
+        return True
+
 
 c.bind("<Button-1>", click)
 
