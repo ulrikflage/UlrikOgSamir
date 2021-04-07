@@ -2,7 +2,7 @@ import socket  # for sockets
 import sys  # for exit
 import time  # for sleep
 
-remote_ip = "192.168.100.100"  # should match the instrument’s IP address
+remote_ip = "localhost"  # should match the instrument’s IP address
 port = 5024  # the port number of the instrument service
 count = 0
 
