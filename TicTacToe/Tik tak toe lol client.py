@@ -102,4 +102,4 @@ def winner():
 
 
 c.bind("<Button-1>", click)
-mainloop()
+c.mainloop()
