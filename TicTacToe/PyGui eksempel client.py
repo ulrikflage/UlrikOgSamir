@@ -9,8 +9,9 @@ s.bind((HOST, PORT))
 
 koblet_til = False
 
-player = 'O'
-symbol = ''
+#player = 'O'
+enemy_symbol = 'X'
+symbol = 'O'
 
 font = 'Helvetica 60'
 sg.theme('Default 1')
@@ -32,56 +33,52 @@ class Client(Thread):
         Thread.__init__(self)
         self.sock = socket
         self.addr = address
+        self.client_data = b''
+        self.data = ''
         self.start()
 
     def run(self):
+        self.gui()
         while 1:
-            print('Client sent: ', self.sock.recv(1024).decode())
-            self.sock.send(b'')
+            self.data = self.sock.recv(1024).decode()
+            self.sock.send(self.client_data)
+            self.client_data = None
 
     def gui(self):
         global symbol
+        global enemy_symbol
         while True:
             event, values = window.Read(timeout=20)
-            if True:
-                symbol = 'X'
+
+            if self.data:
+                window.FindElement(self.data).update(enemy_symbol)
             if event == sg.WIN_CLOSED:
                 break
             elif event == '1':
                 window.FindElement(event).Update(symbol)
-                s.send(bytes(event))
+                self.client_data = b'1'
             elif event == '2':
                 window.FindElement(event).Update(symbol)
-                conn.send(event).encode()
+                self.client_data = b'2'
             elif event == '3':
                 window.FindElement(event).Update(symbol)
-                conn.send(event).encode()
+                self.client_data = b'3'
             elif event == '4':
                 window.FindElement(event).Update(symbol)
-                conn.send(event).encode()
+                self.client_data = b'4'
             elif event == '5':
                 window.FindElement(event).Update(symbol)
-                conn.send(event).encode()
+                self.client_data = b'5'
             elif event == '6':
                 window.FindElement(event).Update(symbol)
-                conn.send(event).encode()
+                self.client_data = b'6'
             elif event == '7':
                 window.FindElement(event).Update(symbol)
-                conn.send(event).encode()
+                self.client_data = b'7'
             elif event == '8':
                 window.FindElement(event).Update(symbol)
-                conn.send(event).encode()
+                self.client_data = b'8'
             elif event == '9':
                 window.FindElement(event).Update(symbol)
-                conn.send(event).encode()
+                self.client_data = b'9'
         window.close()
-
-
-
-
-
-s.listen(5)
-print('Server started and listening')
-while 1:
-    conn, addr = s.accept()
-    Client(conn, addr)

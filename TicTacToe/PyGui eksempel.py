@@ -29,18 +29,19 @@ window = sg.Window('TicTacToe Client', layout)
 
 
 class Client(Thread):
-    def __init__(self, socket, address):
+    def __init__(self):
         Thread.__init__(self)
-        self.sock = socket
-        self.addr = address
+        self.conn, self.addr = s.accept()
         self.client_data = b''
         self.data = ''
         self.start()
 
     def run(self):
         self.gui()
+
+    def recieve_data(self):
         while 1:
-            self.data = self.sock.recv(1024).decode()
+            self.data = self.conn.recv(1024).decode()
             self.sock.send(self.client_data)
             self.client_data = None
 
@@ -84,7 +85,7 @@ class Client(Thread):
         window.close()
 
 
-s.listen(5)
+s.listen(1)
 print('Server started and listening')
 while 1:
     conn, addr = s.accept()
