@@ -25,7 +25,7 @@ create_thread(motta_data)
 
 
 main = Tk()
-
+main.title("Cient side")
 
 c = Canvas(main, width=600, height=600)
 c.pack()

@@ -35,6 +35,7 @@ def venter_tilkobling():
 create_thread(venter_tilkobling)
 
 main = Tk()
+main.title("Server side")
 
 c = Canvas(main, width=600, height=600)
 c.pack()
@@ -111,4 +112,4 @@ def winner():
 
 
 c.bind("<Button-1>", click)
-c.mainloop()
+main.mainloop()
