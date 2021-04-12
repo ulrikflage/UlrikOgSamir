@@ -4,7 +4,7 @@ from grid import Grid
 os.environ['SDL_VIDEO_WINDOW_POS'] = '200,100'
 
 surface = pygame.display.set_mode((600,600))
-pygame.display.set_caption('Tic-tac-toe')
+pygame.display.set_caption('Tic-tac-toe | Server')
 
 
 # create a separate thread to send and receive data from the client
