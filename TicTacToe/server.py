@@ -1,35 +1,63 @@
 import socket
+from threading import Thread
+from time import sleep
 
-
-HOST = '172.18.170.214'
+HOST = 'localhost'
 PORT = 3050
 
-SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.bind((HOST, PORT))
+sock.listen(1)
 
 in_values = [' ' for _ in range(9)]
+data = [0, 0, 'YourTurn', False]
+
+def create_thread(target):
+    thread = Thread(target=target)
+    thread.daemon = True
+    thread.start()
+
+
+def receive_data():
+    global turn
+    global data
+    while True:
+        data = conn.recv(1024).decode() # receive data from the client, it is a blocking method
+        data = data.split('-') # the format of the data after splitting is: ['x', 'y', 'yourturn', 'playing']
+        x, y = int(data[0]), int(data[1])
+
+        if data[3] == 'False':
+            game_over = True
+
+
+def waiting_for_connection():
+    global connection_established, conn, addr
+    print('Waiting for client')
+    conn, addr = sock.accept()  # wait for a connection, it is a blocking method
+    print('client is connected')
+    connection_established = True
+    receive_data()
+
+
+
 
 
 def server(socket, host, port):
     global in_values
-    with socket as s:
-        s.bind((host, port))
-        s.listen(5)
-        conn, addr = s.accept()
-        with conn:
-            print('Connected by', addr)
-            while True:
-                data = conn.recv(1024)
-                if str(data) == "quit":
-                    break
-                elif len(str(data)) == 2:
-                    Pos1 = str(data)[0]
-                    Pos2 = str(data)[1]
-                    checkPos(Pos1, Pos2)
-                # else:
-                #    print(data)
-                #    in_values.append(str(data))
-                conn.sendall(data)
-            conn.close()
+    global data
+    global connection_established
+    while True:
+        if str(data) == "quit":
+            break
+        elif len(str(data)) == 2:
+            Pos1 = str(data)[0]
+            Pos2 = str(data)[1]
+            checkPos(Pos1, Pos2)
+            # else:
+            #    print(data)
+            #    in_values.append(str(data))
+        conn.sendall(data)
+    conn.close()
 
 
 def board(values):
@@ -62,6 +90,8 @@ def checkPos(pos1, pos2):
     global player
     global values
     global in_values
+    global data
+    global turn
     if checkWin():
         in_values = [' ' for _ in range(9)]
         values = [' ' for _ in range(9)]
@@ -102,9 +132,9 @@ def checkPos(pos1, pos2):
                 index = 5
             elif index2 == 3:
                 index = 8
-
-
-    if player == 1:
+    if data[2] == 'YourTurn':
+        turn = True
+    if turn:
         if in_values[int(index)] == ' ':
             in_values[int(index)] = "X"
             player = 2
@@ -163,13 +193,21 @@ def checkWin():
 # server(SOCKET, HOST, PORT)
 def main():
     global player
+    global connection_established
+    connection_established = False
     player = 1
+    create_thread(waiting_for_connection)
     while True:
-        board(in_values)
-        data = input()
-        POS1 = data[0]
-        POS2 = data[1]
-        checkPos(POS1, POS2)
+
+        if connection_established:
+            board(in_values)
+            data_in = input()
+            POS1 = data_in[0]
+            POS2 = data_in[1]
+            checkPos(POS1, POS2)
+        else:
+            print("Waiting for connection. Sleeping for 5 seconds.")
+            sleep(5)
 
 
 values = in_values
