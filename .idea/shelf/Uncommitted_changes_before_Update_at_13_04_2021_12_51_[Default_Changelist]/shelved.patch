@@ -1,0 +1,15 @@
+Index: venv/Lib/site-packages/pip-21.0.1.dist-info/WHEEL
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/venv/Lib/site-packages/pip-21.0.1.dist-info/WHEEL b/venv/Lib/site-packages/pip-21.0.1.dist-info/WHEEL
+new file mode 100644
+--- /dev/null	
++++ b/venv/Lib/site-packages/pip-21.0.1.dist-info/WHEEL	
+@@ -0,0 +1,5 @@
++Wheel-Version: 1.0
++Generator: bdist_wheel (0.36.2)
++Root-Is-Purelib: true
++Tag: py3-none-any
++
