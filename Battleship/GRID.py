@@ -21,6 +21,8 @@ class Grid:
         # search directions  N         NW        W       SW       S       SE      E       NE
         self.search_dirs = [(0, -1), (-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1)]
         self.game_over = False
+        self.o_points = 0
+        self.x_points = 0
 
     def draw(self, surface):
         for line in self.grid_lines:
@@ -89,6 +91,10 @@ class Grid:
         if count == 3:
             print(player, 'wins!')
             self.game_over = True
+            if player == 'O':
+                self.o_points += 1
+            elif player == 'X':
+                self.x_points += 1
         else:
             self.game_over = self.is_grid_full()
 
