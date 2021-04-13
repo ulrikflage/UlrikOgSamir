@@ -68,7 +68,7 @@ while running:
             if event.key == pygame.K_SPACE and grid.game_over:
                 grid.clear_grid()
                 grid.game_over = False
-                playing = 'True'
+                # playing = 'True'
             elif event.key == pygame.K_ESCAPE:
                 running = False
 
