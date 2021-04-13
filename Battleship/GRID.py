@@ -7,12 +7,17 @@ letterO = pygame.image.load(os.path.join('res', 'letterO.png'))
 
 class Grid:
     def __init__(self):
-        self.grid_lines = [((0,200), (600,200)), # first horizontal line
-                           ((0,400), (600,400)), # second horizontal line
-                           ((200,0), (200,600)), # first vertical line
-                           ((400,0), (400,600))] # second vertical line
+        self.grid_lines = [((0, 100), (600, 200)),  # first horizontal line
+                           ((0, 200), (600, 400)),  # second horizontal line
+                           ((200, 0), (200, 600)),  # first vertical line
+                           ((400, 0), (400, 600)),
+                           ((0, 200), (600, 200)),  # first horizontal line
+                           ((0, 400), (600, 400)),  # second horizontal line
+                           ((200, 0), (200, 600)),  # first vertical line
+                           ((400, 0), (400, 600))
+                           ]  # second vertical line
 
-        self.grid = [[0 for x in range(3)] for y in range(3)]
+        self.grid = [[0 for x in range(9)] for y in range(9)]
         # search directions  N         NW        W       SW       S       SE      E       NE
         self.search_dirs = [(0, -1), (-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1)]
         self.game_over = False

@@ -6,8 +6,8 @@ from grid import Grid
 
 os.environ['SDL_VIDEO_WINDOW_POS'] = '200,100'
 
-surface = pygame.display.set_mode((600,600))
-pygame.display.set_caption('Tic-tac-toe | Server')
+surface = pygame.display.set_mode((1000, 1000))
+pygame.display.set_caption('Battleship | Server')
 
 
 # create a separate thread to send and receive data from the client
@@ -16,9 +16,8 @@ def create_thread(target):
     thread.daemon = True
     thread.start()
 
-
 # creating a TCP socket for the server
-HOST = '192.168.0.100'
+HOST = '127.0.0.1'
 PORT = 65432
 connection_established = False
 conn, addr = None, None
@@ -65,27 +64,11 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONDOWN and connection_established:
-            if pygame.mouse.get_pressed()[0]:
-                if turn and not grid.game_over:
-                    pos = pygame.mouse.get_pos()
-                    cellX, cellY = pos[0] // 200, pos[1] // 200
-                    grid.get_mouse(cellX, cellY, player)
-                    if grid.game_over:
-                        playing = 'False'
-                    send_data = '{}-{}-{}-{}'.format(cellX, cellY, 'yourturn', playing).encode()
-                    conn.send(send_data)
-                    turn = False
-
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE and grid.game_over:
-                grid.clear_grid()
-                grid.game_over = False
-                playing = 'True'
-            elif event.key == pygame.K_ESCAPE:
-                running = False
-
-    surface.fill((255, 255, 255))
-
-    grid.draw(surface)
-
-    pygame.display.flip()
+            pos = pygame.mouse.get_pos()
+            cellX, cellY = pos[0] // 100, pos[1] // 100
+            grid.get_mouse(cellX, cellY, player)
+            if grid.game_over:
+                playing = 'False'
+            send_data = '{}-{}-{}-{}'.format(cellX, cellY, 'yourturn', playing).encode()
+            conn.send(send_data)
+            turn = False
