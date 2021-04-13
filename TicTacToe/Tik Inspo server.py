@@ -70,8 +70,8 @@ while running:
                     pos = pygame.mouse.get_pos()
                     cellX, cellY = pos[0] // 200, pos[1] // 200
                     grid.get_mouse(cellX, cellY, player)
-                    #if grid.game_over:
-                    #    playing = 'False'
+                    if grid.game_over:
+                        playing = 'False'
                     send_data = '{}-{}-{}-{}'.format(cellX, cellY, 'yourturn', playing).encode()
                     conn.send(send_data)
                     turn = False

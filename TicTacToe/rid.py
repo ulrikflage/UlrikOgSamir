@@ -19,7 +19,7 @@ class Grid:
 
     def draw(self, surface):
         for line in self.grid_lines:
-            pygame.draw.line(surface, (200,200,200), line[0], line[1], 2)
+            pygame.draw.line(surface, (0, 0, 0), line[0], line[1], 2)
 
         for y in range(len(self.grid)):
             for x in range(len(self.grid[y])):

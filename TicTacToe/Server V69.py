@@ -79,7 +79,7 @@ while running:
                 running = False
 
 
-    surface.fill((0,0,0))
+    surface.fill((200,200,200))
 
     grid.draw(surface)
 
