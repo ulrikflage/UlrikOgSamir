@@ -1,4 +1,7 @@
-import pygame, threading, socket, os
+import os
+import pygame
+import socket
+import threading
 from grid import Grid
 
 os.environ['SDL_VIDEO_WINDOW_POS'] = '200,100'
@@ -28,8 +31,8 @@ sock.listen(1)
 def receive_data():
     global turn
     while True:
-        data = conn.recv(1024).decode() # receive data from the client, it is a blocking method
-        data = data.split('-') # the format of the data after splitting is: ['x', 'y', 'yourturn', 'playing']
+        data = conn.recv(1024).decode()  # receive data from the client, it is a blocking method
+        data = data.split('-')  # the format of the data after splitting is: ['x', 'y', 'yourturn', 'playing']
         x, y = int(data[0]), int(data[1])
         if data[2] == 'yourturn':
             turn = True
@@ -41,8 +44,9 @@ def receive_data():
 
 def waiting_for_connection():
     global connection_established, conn, addr
-    conn, addr = sock.accept() # wait for a connection, it is a blocking method
-    print('client is connected')
+    print("Waiting for connection from client...")
+    conn, addr = sock.accept()  # wait for a connection, it is a blocking method
+    print('Client is connected')
     connection_established = True
     receive_data()
 
