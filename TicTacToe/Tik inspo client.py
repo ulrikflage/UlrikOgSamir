@@ -1,4 +1,7 @@
-import pygame, socket, os, threading
+import os
+import pygame
+import socket
+import threading
 from grid import Grid
 
 os.environ['SDL_VIDEO_WINDOW_POS'] = '850,100'
