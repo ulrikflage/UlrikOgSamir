@@ -1,5 +1,5 @@
 import pygame
-from grid import Grid
+from rid import Grid
 
 import os
 os.environ['SDL_VIDEO_WINDOW_POS'] = '200,100'
