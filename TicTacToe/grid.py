@@ -87,7 +87,6 @@ class Grid:
             self.clear_grid()
         else:
             self.game_over = self.is_grid_full()
-            self.clear_grid()
 
 
     def is_grid_full(self):
