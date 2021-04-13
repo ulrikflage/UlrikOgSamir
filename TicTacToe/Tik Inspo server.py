@@ -18,7 +18,7 @@ def create_thread(target):
 
 
 # creating a TCP socket for the server
-HOST = '127.0.0.1'
+HOST = '192.168.0.102'
 PORT = 65432
 connection_established = False
 conn, addr = None, None
