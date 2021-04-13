@@ -95,6 +95,7 @@ class Grid:
                 self.o_points += 1
             elif player == 'X':
                 self.x_points += 1
+            print("\nO:", self.o_points, "\nX:", self.x_points, "\n")
         else:
             self.game_over = self.is_grid_full()
 
