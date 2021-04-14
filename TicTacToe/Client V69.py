@@ -16,7 +16,7 @@ def create_thread(target):
 
 # creating a TCP socket for the client
 import socket
-HOST = '192.168.0.102'
+HOST = 'localhost'
 PORT = 65432
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
