@@ -1,11 +1,11 @@
-import pygame
-from rid import Grid
+import pygame  # write "pip install pygame" in cmd or terminal
+from rid import Grid  # importing rid.py (grid.py)
 
 import os
 os.environ['SDL_VIDEO_WINDOW_POS'] = '200,100'
 
 surface = pygame.display.set_mode((600,600))
-pygame.display.set_caption('Tic-tac-toe')
+pygame.display.set_caption('Tic-tac-toe | Server')
 
 # create a separate thread to send and receive data from the client
 import threading
@@ -16,7 +16,7 @@ def create_thread(target):
 
 # creating a TCP socket for the server
 import socket
-HOST = '192.168.0.102'
+HOST = 'localhost'  # address of the pc running program
 PORT = 65432
 connection_established = False
 conn, addr = None, None

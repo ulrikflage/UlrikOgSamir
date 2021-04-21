@@ -1,11 +1,11 @@
-import pygame
-from rid import Grid
+import pygame  # write "pip install pygame" in cmd or terminal
+from rid import Grid  # importing rid.py (grid.py)
 
 import os
 os.environ['SDL_VIDEO_WINDOW_POS'] = '850,100'
 
 surface = pygame.display.set_mode((600,600))
-pygame.display.set_caption('Tic-tac-toe')
+pygame.display.set_caption('Tic-tac-toe | Client')
 
 # create a separate thread to send and receive data from the server
 import threading
@@ -16,7 +16,7 @@ def create_thread(target):
 
 # creating a TCP socket for the client
 import socket
-HOST = '192.168.0.102'
+HOST = 'localhost'  # address of pc running server
 PORT = 65432
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -25,8 +25,8 @@ sock.connect((HOST, PORT))
 def receive_data():
     global turn
     while True:
-        data = sock.recv(1024).decode() # receive data from the server, it is a blocking method
-        data = data.split('-') # the format of the data after splitting is: ['x', 'y', 'yourturn', 'playing']
+        data = sock.recv(1024).decode()  # receive data from the server, it is a blocking method
+        data = data.split('-')  # the format of the data after splitting is: ['x', 'y', 'yourturn', 'playing']
         x, y = int(data[0]), int(data[1])
         if data[2] == 'yourturn':
             turn = True
